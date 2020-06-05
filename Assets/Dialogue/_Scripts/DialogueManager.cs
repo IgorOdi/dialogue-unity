@@ -24,14 +24,14 @@ namespace Dialogues {
             DontDestroyOnLoad (manager);
         }
 
-        public void RunDialogue (Action<TextWriter, DialogueAnimator> callback) {
+        public void RunDialogue (Action<DialogueViewer> callback) {
 
             SceneManager.LoadSceneAsync (DIALOGUE_SCENE_NAME, LoadSceneMode.Additive).completed += (operation) => {
 
-                var dialogueSceneController = FindObjectOfType<DialogueSceneController> ();
-                var dialogueComponents = dialogueSceneController.GetDialogueComponents ();
+                var dialogueViewer = FindObjectOfType<DialogueViewer> ();
+                dialogueViewer.ConfigureViewer ();
 
-                callback?.Invoke (dialogueComponents.textWriter, dialogueComponents.dialogueAnimator);
+                callback?.Invoke (dialogueViewer);
             };
         }
 

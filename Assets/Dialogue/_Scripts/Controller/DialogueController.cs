@@ -13,26 +13,23 @@ namespace Dialogues.Controller {
         private int _currentDialogueIndex;
 
         private Coroutine _updateCoroutine;
-        private TextWriter _textWriter;
-        private DialogueAnimator _dialogueAnimator;
+        public DialogueViewer _dialogueViewer;
 
         private KeyCode keyCode = KeyCode.Mouse0;
 
         public void ShowDialogue (DialogueAsset dialogueAsset) {
 
             _isDisplayingDialogue = true;
-            DialogueManager.Instance.RunDialogue ((textWriter, dialogueAnimator) => {
+            DialogueManager.Instance.RunDialogue ((dialogueViewer) => {
 
-                _textWriter = textWriter;
-                _dialogueAnimator = dialogueAnimator;
+                _dialogueViewer = dialogueViewer;
 
-                _textWriter.ConfigureDialogue (dialogueAsset.Dialogues[0]);
-                _dialogueAnimator.OpenDialogueBox (() => {
+                _dialogueViewer.ConfigureDialogue (dialogueAsset.Dialogues[0]);
+                _dialogueViewer.DialogueAnimator.OpenDialogueBox (() => {
 
                     _currentDialogueAsset = dialogueAsset;
                     if (_updateCoroutine != null) {
 
-                        _textWriter.AutoFillCurrentDialogue ();
                         StopCoroutine (_updateCoroutine);
                     }
                     StartCoroutine (UpdateDialogue (dialogueAsset));
@@ -48,9 +45,9 @@ namespace Dialogues.Controller {
 
                 if (Input.GetKeyDown (keyCode)) {
 
-                    if (_textWriter.Filling) {
+                    if (_dialogueViewer.TextWriter.IsFilling ()) {
 
-                        _textWriter.AutoFillCurrentDialogue ();
+                        _dialogueViewer.TextWriter.AutoFillText ();
                     } else if (_currentDialogueIndex + 1 < _currentDialogueAsset.Dialogues.Count) {
 
                         _currentDialogueIndex++;
@@ -67,14 +64,14 @@ namespace Dialogues.Controller {
 
         private void ConfigureAndWriteDialogue (Dialogue dialogue) {
 
-            _textWriter.ConfigureDialogue (dialogue);
-            _textWriter.WriteText ();
+            _dialogueViewer.ConfigureDialogue (dialogue);
+            _dialogueViewer.TextWriter.WriteText (dialogue.Text);
         }
 
         private void FinishDialogueAssetDialogue () {
 
             //TODO: Check Conditions to Next
-            _dialogueAnimator.CloseDialogueBox (() => {
+            _dialogueViewer.DialogueAnimator.CloseDialogueBox (() => {
 
                 _isDisplayingDialogue = false;
                 DialogueManager.Instance.FinishDialogue (null);
