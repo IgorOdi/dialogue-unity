@@ -10,11 +10,12 @@ namespace Dialogues.View {
 
         private bool _filling;
         private TextMeshProUGUI _textBox;
-        private Dialogue _currentDialogue;
         private Coroutine _fillCoroutine;
 
         private const float textTime = 0.05f;
 
+        public bool IsFilling () => _filling;
+        
         public void WriteText (string text) {
 
             if (_fillCoroutine != null) StopCoroutine (_fillCoroutine);
@@ -23,14 +24,14 @@ namespace Dialogues.View {
 
         public void AutoFillText () {
 
-            _textBox.maxVisibleCharacters = _textBox.text.Length;
+            _textBox.maxVisibleCharacters = _textBox.textInfo.characterCount;
         }
 
         IEnumerator FillText (string text) {
 
             _filling = true;
             _textBox.maxVisibleCharacters = 0;
-            while (_textBox.maxVisibleCharacters < text.Length) {
+            while (_textBox.maxVisibleCharacters < _textBox.textInfo.characterCount) {
 
                 _textBox.maxVisibleCharacters += 1;
                 yield return new WaitForSeconds (textTime);
@@ -44,9 +45,5 @@ namespace Dialogues.View {
             _textBox = textBox;
         }
 
-        public bool IsFilling () {
-
-            return _filling;
-        }
     }
 }

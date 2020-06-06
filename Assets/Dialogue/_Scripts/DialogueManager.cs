@@ -13,7 +13,7 @@ namespace Dialogues {
             private set { }
         }
         private static DialogueManager _instance;
-        private const string DIALOGUE_SCENE_NAME = "Dialogue";
+        private const string DIALOGUE_SCENE_NAME = "BigCharDialogue";
 
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InstantiateManager () {
@@ -24,11 +24,11 @@ namespace Dialogues {
             DontDestroyOnLoad (manager);
         }
 
-        public void RunDialogue (Action<DialogueViewer> callback) {
+        public void RunDialogue (Action<BaseDialogueViewer> callback) {
 
             SceneManager.LoadSceneAsync (DIALOGUE_SCENE_NAME, LoadSceneMode.Additive).completed += (operation) => {
 
-                var dialogueViewer = FindObjectOfType<DialogueViewer> ();
+                var dialogueViewer = FindObjectOfType<BaseDialogueViewer> ();
                 dialogueViewer.ConfigureViewer ();
 
                 callback?.Invoke (dialogueViewer);

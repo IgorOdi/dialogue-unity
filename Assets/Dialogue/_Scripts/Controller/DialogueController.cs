@@ -8,12 +8,13 @@ namespace Dialogues.Controller {
 
     public class DialogueController : MonoBehaviour {
 
+
         [HideInInspector] public bool _isDisplayingDialogue;
         private DialogueAsset _currentDialogueAsset;
         private int _currentDialogueIndex;
 
+        private BaseDialogueViewer _dialogueViewer;
         private Coroutine _updateCoroutine;
-        public DialogueViewer _dialogueViewer;
 
         private KeyCode keyCode = KeyCode.Mouse0;
 
