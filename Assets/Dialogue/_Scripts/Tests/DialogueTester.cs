@@ -2,10 +2,18 @@
 
 public class DialogueTester : MonoBehaviour {
 
-    public Dialogues.Model.DialogueAsset dialogueAsset;
+    public Dialogues.Model.Core.DialogueAsset dialogueAsset;
 
     void Start () {
 
-        FindObjectOfType<Dialogues.Controller.DialogueController> ().ShowDialogue (dialogueAsset);
+        FindObjectOfType<Dialogues.Controller.Core.DialogueController> ().ShowDialogue (dialogueAsset);
+    }
+
+    void Update () {
+
+        if (Input.GetKeyDown (KeyCode.Space)) {
+            
+            FindObjectOfType<Dialogues.Controller.Core.DialogueController> ().ShowDialogue (dialogueAsset);
+        }
     }
 }

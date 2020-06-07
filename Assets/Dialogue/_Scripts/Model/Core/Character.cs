@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dialogues.Model {
+namespace Dialogues.Model.Core {
 
     [CreateAssetMenu (menuName = "Dialogue/Character", fileName = "New Character")]
     public class Character : ScriptableObject {

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using Dialogues.Model.Core;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dialogues.Model.Editor {

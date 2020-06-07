@@ -1,13 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Dialogues.Model;
+using Dialogues.Model.Core;
 using Dialogues.View;
 using UnityEngine;
 
-namespace Dialogues.Controller {
+namespace Dialogues.Controller.Core {
 
     public class DialogueController : MonoBehaviour {
-
 
         [HideInInspector] public bool _isDisplayingDialogue;
         private DialogueAsset _currentDialogueAsset;
@@ -41,7 +39,7 @@ namespace Dialogues.Controller {
         public IEnumerator UpdateDialogue (DialogueAsset dialogueAsset) {
 
             _currentDialogueIndex = 0;
-            ConfigureAndWriteDialogue (dialogueAsset.Dialogues[_currentDialogueIndex]);
+            _dialogueViewer.TextWriter.WriteText ();
             while (_currentDialogueIndex < _currentDialogueAsset.Dialogues.Count) {
 
                 if (Input.GetKeyDown (keyCode)) {
@@ -52,7 +50,8 @@ namespace Dialogues.Controller {
                     } else if (_currentDialogueIndex + 1 < _currentDialogueAsset.Dialogues.Count) {
 
                         _currentDialogueIndex++;
-                        ConfigureAndWriteDialogue (dialogueAsset.Dialogues[_currentDialogueIndex]);
+                        _dialogueViewer.ConfigureDialogue (dialogueAsset.Dialogues[_currentDialogueIndex]);
+                        _dialogueViewer.TextWriter.WriteText ();
                     } else {
 
                         FinishDialogueAssetDialogue ();
@@ -61,12 +60,6 @@ namespace Dialogues.Controller {
 
                 yield return null;
             }
-        }
-
-        private void ConfigureAndWriteDialogue (Dialogue dialogue) {
-
-            _dialogueViewer.ConfigureDialogue (dialogue);
-            _dialogueViewer.TextWriter.WriteText (dialogue.Text);
         }
 
         private void FinishDialogueAssetDialogue () {

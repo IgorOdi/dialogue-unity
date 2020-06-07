@@ -4,12 +4,12 @@ namespace Dialogues.View {
 
     public interface ITextWriter {
 
-        void WriteText (string text);
+        void WriteText ();
 
         void AutoFillText ();
 
         bool IsFilling ();
 
-        void SetTextBox (TextMeshProUGUI textMeshProUGUI);
+        void SetTextAndBox (string text, TextMeshProUGUI textMeshProUGUI);
     }
 }

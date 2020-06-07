@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dialogues.Controller;
 using Dialogues.View;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Dialogues {
             private set { }
         }
         private static DialogueManager _instance;
-        private const string DIALOGUE_SCENE_NAME = "BigCharDialogue";
+        private const string DIALOGUE_SCENE_NAME = "BasicDialogue";
 
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InstantiateManager () {
@@ -30,7 +31,6 @@ namespace Dialogues {
 
                 var dialogueViewer = FindObjectOfType<BaseDialogueViewer> ();
                 dialogueViewer.ConfigureViewer ();
-
                 callback?.Invoke (dialogueViewer);
             };
         }

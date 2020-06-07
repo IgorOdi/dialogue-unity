@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Dialogues.Model {
+namespace Dialogues.Model.Core {
 
     [Serializable]
     public class Expression {

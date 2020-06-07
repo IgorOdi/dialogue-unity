@@ -1,4 +1,4 @@
-﻿using Dialogues.Model;
+﻿using Dialogues.Model.Core;
 using UnityEngine;
 
 namespace Dialogues.View {

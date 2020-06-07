@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Dialogues.Model {
+namespace Dialogues.Model.Core {
 
     [Serializable]
     public class Dialogue {
