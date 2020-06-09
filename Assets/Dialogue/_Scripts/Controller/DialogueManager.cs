@@ -22,6 +22,7 @@ namespace Dialogues {
             GameObject manager = new GameObject ("DialogueManager");
             manager.AddComponent (typeof (DialogueManager));
             _instance = manager.GetComponent<DialogueManager> ();
+            Model.DialoguePreferences.Init ();
             DontDestroyOnLoad (manager);
         }
 

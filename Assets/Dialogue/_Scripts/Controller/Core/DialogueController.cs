@@ -44,7 +44,7 @@ namespace Dialogues.Controller.Core {
 
                 if (Input.GetKeyDown (keyCode)) {
 
-                    if (_dialogueViewer.TextWriter.IsFilling ()) {
+                    if (_dialogueViewer.TextWriter.IsFilling) {
 
                         _dialogueViewer.TextWriter.AutoFillText ();
                     } else if (_currentDialogueIndex + 1 < _currentDialogueAsset.Dialogues.Count) {

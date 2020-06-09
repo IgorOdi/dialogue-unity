@@ -405,7 +405,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 415406200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0797971bda8978e46b942a0f0ef3e12b, type: 3}
+  m_Script: {fileID: 11500000, guid: c7b95c2ea2368634db2f43be456138f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &415406203
@@ -465,7 +465,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueBox: {fileID: 422024287}
   _characterSprite: {fileID: 412027478}
-  _nameText: {fileID: 0}
   _textBox: {fileID: 210498106}
 --- !u!1 &422024285
 GameObject:

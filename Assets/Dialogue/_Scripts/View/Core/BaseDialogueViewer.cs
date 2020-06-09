@@ -5,12 +5,12 @@ namespace Dialogues.View {
 
     public abstract class BaseDialogueViewer : MonoBehaviour {
 
-        public ITextWriter TextWriter { get; set; }
+        public BaseTextWriter TextWriter { get; set; }
         public DialogueAnimator DialogueAnimator { get; set; }
 
         public virtual void ConfigureViewer () {
 
-            TextWriter = GetComponent<ITextWriter> ();
+            TextWriter = GetComponent<BaseTextWriter> ();
             DialogueAnimator = GetComponent<DialogueAnimator> ();
         }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   Dialogues:
   - Character: {fileID: 11400000, guid: 7a3783256c4fa8a418b08abbe7c750cd, type: 2}
     ExpressionIndex: 0
-    Text: "E a\xED minha amiguinha, <t>como</t> voc\xEA est\xE1?"
+    Text: "E a\xED minha amiguinha, <t=1>como</t> voc\xEA est\xE1?"
   - Character: {fileID: 11400000, guid: a2ee24eabea8706479fec18222099131, type: 2}
     ExpressionIndex: 0
     Text: "Ol\xE1, <cs>bom dia, boa tarde, boa noite!"

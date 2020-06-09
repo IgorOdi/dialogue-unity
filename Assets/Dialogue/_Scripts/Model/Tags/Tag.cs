@@ -5,15 +5,14 @@ namespace Dialogues.Model.Tags {
 
     public class Tag {
 
-        public string OpenTag { get; set; }
-        public string CloseTag { get; set; }
-        public Action<ITextWriter> OnOpenTag { get; set; }
-        public Action<ITextWriter> OnCloseTag { get; set; }
+        public readonly string TagString;
+        public readonly float Parameter;
+        public readonly Action<BaseTextWriter, float> OnOpenTag;
+        public readonly Action<BaseTextWriter, float> OnCloseTag;
 
-        public Tag (string openTag, string closeTag, Action<ITextWriter> onOpenTag, Action<ITextWriter> onCloseTag) {
+        public Tag (string tagString, Action<BaseTextWriter, float> onOpenTag, Action<BaseTextWriter, float> onCloseTag) {
 
-            OpenTag = openTag;
-            CloseTag = closeTag;
+            TagString = tagString;
             OnOpenTag = onOpenTag;
             OnCloseTag = onCloseTag;
         }
