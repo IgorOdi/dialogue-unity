@@ -14,7 +14,6 @@ namespace Dialogues.View {
         public override void ConfigureDialogue (Dialogue dialogue) {
 
             _characterSprite.sprite = dialogue.GetExpressionFromIndex ().Sprite;
-
             string text = dialogue.Text.Insert (0, $"<b><color=yellow><size=120%>{dialogue.Character.Name}:</b></color></size=120%> ");
             TextWriter.SetTextAndBox (text, _textBox);
         }
