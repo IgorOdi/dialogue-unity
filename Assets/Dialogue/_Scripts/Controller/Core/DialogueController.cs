@@ -69,7 +69,7 @@ namespace Dialogues.Controller.Core {
             _dialogueViewer.DialogueAnimator.CloseDialogueBox (() => {
 
                 _isDisplayingDialogue = false;
-                DialogueManager.Instance.FinishDialogue (null);
+                DialogueManager.Instance.UnloadDialogue (null);
             });
         }
     }
