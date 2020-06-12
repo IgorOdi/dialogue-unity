@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dialogues.View;
 
 namespace Dialogues.Model.Tags {
@@ -6,11 +7,10 @@ namespace Dialogues.Model.Tags {
     public class Tag {
 
         public readonly string TagString;
-        public readonly float Parameter;
-        public readonly Action<BaseTextWriter, float> OnOpenTag;
-        public readonly Action<BaseTextWriter, float> OnCloseTag;
+        public readonly Action<BaseTextWriter, int, List<float>> OnOpenTag;
+        public readonly Action<BaseTextWriter, int, List<float>> OnCloseTag;
 
-        public Tag (string tagString, Action<BaseTextWriter, float> onOpenTag, Action<BaseTextWriter, float> onCloseTag) {
+        public Tag (string tagString, Action<BaseTextWriter, int, List<float>> onOpenTag, Action<BaseTextWriter, int, List<float>> onCloseTag) {
 
             TagString = tagString;
             OnOpenTag = onOpenTag;

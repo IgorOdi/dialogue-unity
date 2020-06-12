@@ -1,5 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Dialogues.Controller.Core;
+using Dialogues.Model;
+using Dialogues.View.Effect;
 using Dialogues.View.Tags;
 using TMPro;
 using UnityEngine;
@@ -8,19 +12,29 @@ namespace Dialogues.View {
 
     public class BaseTextWriter : MonoBehaviour {
 
-        public virtual bool IsFilling { get; private set; }
         public virtual float CurrentWriteTime { get; set; }
+        public virtual bool IsFilling { get; private set; }
 
+        private string _currentText;
         private TextMeshProUGUI _textBox;
         private Coroutine _fillCoroutine;
-        private string _currentText;
         private List<TagInfo> _decodifiedTags;
+        private List<ITextEffect> _textEffects = new List<ITextEffect> ();
+        private int _lastTagIndex = -1;
 
-        private void Awake () => CurrentWriteTime = Model.DialoguePreferences.Instance.BaseWriteTime;
+        void Awake () {
+
+            /* foreach (ITextEffect t in GetComponentsInChildren<ITextEffect> ())
+                RegisterEffect (t); */
+        }
 
         public virtual void WriteText () {
 
+            ResetFillingTime ();
             (_decodifiedTags, _currentText) = TagDecodifier.Decodify (_currentText);
+
+            for (int i = 0; i < _textEffects.Count; i++)
+                _textEffects[i].ClearValues ();
 
             if (_fillCoroutine != null) StopCoroutine (_fillCoroutine);
             _fillCoroutine = StartCoroutine (FillText ());
@@ -31,13 +45,16 @@ namespace Dialogues.View {
             IsFilling = true;
             _textBox.maxVisibleCharacters = 0;
             _textBox.text = _currentText;
-            int tagIndex = 0;
+            _lastTagIndex = -1;
+
             while (_textBox.maxVisibleCharacters < _textBox.textInfo.characterCount) {
 
                 if (_decodifiedTags.Exists (i => i.TagPosition == _textBox.maxVisibleCharacters)) {
 
-                    _decodifiedTags[tagIndex].OnTag?.Invoke (this, _decodifiedTags[tagIndex].Parameter);
-                    tagIndex++;
+                    _lastTagIndex += 1;
+                    _decodifiedTags[_lastTagIndex].OnTag?.Invoke (this,
+                        _decodifiedTags[_lastTagIndex].TagPosition,
+                        _decodifiedTags[_lastTagIndex].Parameters);
                 }
 
                 _textBox.maxVisibleCharacters += 1;
@@ -50,12 +67,40 @@ namespace Dialogues.View {
         public virtual void AutoFillText () {
 
             _textBox.maxVisibleCharacters = _textBox.textInfo.characterCount;
+            for (int i = _lastTagIndex + 1; i < _decodifiedTags.Count; i++) {
+
+                _decodifiedTags[i].OnTag?.Invoke (this,
+                    _decodifiedTags[i].TagPosition,
+                    _decodifiedTags[i].Parameters);
+
+                _lastTagIndex = i;
+            }
         }
 
         public virtual void SetTextAndBox (string text, TextMeshProUGUI textBox) {
 
             _textBox = textBox;
             _currentText = text;
+        }
+
+        public void RegisterEffect (ITextEffect effect) {
+
+            _textEffects.Add (effect);
+        }
+
+        public void UnregisterEffect (ITextEffect effect) {
+
+            _textEffects.Remove (effect);
+        }
+
+        public ITextEffect GetEffect<T> () where T : TextEffect {
+
+            return _textEffects.Where (t => t.GetType () == typeof (T)).FirstOrDefault ();
+        }
+
+        private void ResetFillingTime () {
+
+            CurrentWriteTime = DialoguePreferences.Instance.BaseWriteTime;
         }
     }
 }

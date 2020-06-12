@@ -8,13 +8,13 @@ namespace Dialogues.View.Tags {
     public struct TagInfo {
 
         public readonly int TagPosition;
-        public readonly float Parameter;
-        public readonly Action<BaseTextWriter, float> OnTag;
+        public readonly List<float> Parameters;
+        public readonly Action<BaseTextWriter, int, List<float>> OnTag;
 
-        public TagInfo (int tagPosition, float param, Action<BaseTextWriter, float> onTag) {
+        public TagInfo (int tagPosition, List<float> @params, Action<BaseTextWriter, int, List<float>> onTag) {
 
             TagPosition = tagPosition;
-            Parameter = param;
+            Parameters = @params;
             OnTag = onTag;
         }
     }
@@ -40,8 +40,8 @@ namespace Dialogues.View.Tags {
                     }
 
                     string tagString = text.Substring (i, indexOfCloseTag - i);
-                    float parameter = tagString.Contains ("=") ? DecodifyParameter (tagString) : float.NaN;
-                    bool isOpening = !tagString.Contains ('/');
+                    List<float> parameter = tagString.Contains ("=") ? DecodifyParameter (tagString) : null;
+                    bool isOpening = !tagString[1].Equals ('/');
 
                     Tag tag = TagDatabase.GetTagWithString (tagString);
 
@@ -53,15 +53,23 @@ namespace Dialogues.View.Tags {
             return (tagInfos, text);
         }
 
-        private static float DecodifyParameter (string param) {
+        private static List<float> DecodifyParameter (string param) {
 
             int equalsIndex = param.IndexOf ('=') + 1;
             int endTag = param.IndexOf ('>');
             param = param.Substring (equalsIndex, endTag - equalsIndex);
-            float paramResult = float.NaN;
-            if (!float.TryParse (param, out paramResult)) {
-                throw new Exception ("Parameter format incorrect");
+            int paraAmount = param.Count (s => s.Equals ('/'));
+
+            List<float> paramResult = new List<float> ();
+            foreach (string s in param.Split ('/')) {
+
+                float paramValue = 0;
+                if (!float.TryParse (s, out paramValue)) {
+                    throw new Exception ("Parameter format incorrect");
+                }
+                paramResult.Add (paramValue);
             }
+
             return paramResult;
         }
     }

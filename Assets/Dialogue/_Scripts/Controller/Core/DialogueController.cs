@@ -31,7 +31,7 @@ namespace Dialogues.Controller.Core {
 
                         StopCoroutine (_updateCoroutine);
                     }
-                    StartCoroutine (UpdateDialogue (dialogueAsset));
+                    _updateCoroutine = StartCoroutine (UpdateDialogue (dialogueAsset));
                 });
             });
         }
@@ -54,7 +54,7 @@ namespace Dialogues.Controller.Core {
                         _dialogueViewer.TextWriter.WriteText ();
                     } else {
 
-                        FinishDialogueAssetDialogue ();
+                        FinishDialogue ();
                     }
                 }
 
@@ -62,9 +62,10 @@ namespace Dialogues.Controller.Core {
             }
         }
 
-        private void FinishDialogueAssetDialogue () {
+        private void FinishDialogue () {
 
             //TODO: Check Conditions to Next
+            StopCoroutine (_updateCoroutine);
             _dialogueViewer.DialogueAnimator.CloseDialogueBox (() => {
 
                 _isDisplayingDialogue = false;

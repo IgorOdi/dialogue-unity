@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using Dialogues.Controller;
 using Dialogues.View;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Dialogues {
+namespace Dialogues.Controller.Core {
 
     public class DialogueManager : MonoBehaviour {
 
