@@ -52,39 +52,32 @@ namespace Dialogues.View.Effect {
 
         protected override IEnumerator Effect () {
 
-            // We force an update of the text object since it would only be updated at the end of the frame. Ie. before this code is executed on the first frame.
-            // Alternatively, we could yield and wait until the end of the frame when the text object will be generated.
             _textComponent.ForceMeshUpdate ();
 
             TMP_TextInfo textInfo = _textComponent.textInfo;
-
             Matrix4x4 matrix;
 
             int loopCount = 0;
             _hasTextChanged = true;
 
-            // Create an Array which contains pre-computed Angle Ranges and Speeds for a bunch of characters.
             VertexAnim[] vertexAnim = new VertexAnim[1024];
             for (int i = 0; i < 1024; i++) {
                 vertexAnim[i].angleRange = Random.Range (10f, 25f);
                 vertexAnim[i].speed = Random.Range (1f, 3f);
             }
 
-            // Cache the vertex data of the text object as the Jitter FX is applied to the original position of the characters.
             TMP_MeshInfo[] cachedMeshInfo = textInfo.CopyMeshInfoVertexData ();
 
             while (true) {
-                // Get new copy of vertex data if the text has changed.
-                if (_hasTextChanged) {
-                    // Update the copy of the vertex data for the text object.
-                    cachedMeshInfo = textInfo.CopyMeshInfoVertexData ();
 
+                if (_hasTextChanged) {
+
+                    cachedMeshInfo = textInfo.CopyMeshInfoVertexData ();
                     _hasTextChanged = false;
                 }
 
                 int characterCount = textInfo.characterCount;
 
-                // If No Characters then just yield and wait for some text to be added
                 if (characterCount == 0) {
                     yield return new WaitForSeconds (0.05f);
                     continue;
