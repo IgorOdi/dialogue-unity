@@ -6,7 +6,7 @@ using UnityEngine;
 //BASED ON VERTEX JITTER FROM TEXT MESH PRO EXAMPLE
 namespace Dialogues.View.Effect {
 
-    public class JitterEffect : TextEffect, ITextEffect {
+    public class JitterEffect : TextEffect {
 
         [Range (0, 1f)]
         private float _speedMultiplier = 0.5f;
@@ -32,14 +32,14 @@ namespace Dialogues.View.Effect {
             base.OnDisable ();
         }
 
-        public void SetParameters (List<float> parameters) {
+        public override void SetParameters (List<float> parameters) {
 
             if (parameters.Count > 0) _angleMultiplier = parameters[0];
             if (parameters.Count > 1) _speedMultiplier = parameters[1];
             if (parameters.Count > 2) _curveScale = parameters[2];
         }
 
-        public void RegisterValues (int start, int end) {
+        public override void RegisterValues (int start, int end) {
 
             if (_intervalValues.Count > 0 && _intervalValues[_intervalValues.Count - 1].Item2 == 999) {
 
@@ -48,11 +48,6 @@ namespace Dialogues.View.Effect {
 
                 _intervalValues.Add ((start, end));
             }
-        }
-
-        public void ClearValues () {
-
-            _intervalValues.Clear ();
         }
 
         protected override IEnumerator Effect () {

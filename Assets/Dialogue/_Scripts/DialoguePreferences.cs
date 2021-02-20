@@ -1,17 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Dialogues.Model {
 
-    public class DialoguePreferences : ScriptableObject {
+    internal class DialoguePreferences : ScriptableObject {
 
-        public static DialoguePreferences Instance { get; private set; }
-        [Range(0.01f, 0.1f)]
-        public float BaseWriteTime = 0.03f;
-        public string DialogueScene;
+        internal static DialoguePreferences Instance { get; private set; }
 
-        public static DialoguePreferences Init () {
+        [SerializeField, Range (0.01f, 0.1f)]
+        internal float BaseWriteTime = 0.03f;
+        [SerializeField]
+        internal string DialogueScene;
+
+        internal static DialoguePreferences Init () {
 
             Instance = Resources.Load ("Preferences") as DialoguePreferences;
             return Instance;

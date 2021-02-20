@@ -5,39 +5,49 @@ using UnityEngine;
 
 namespace Dialogues.View.Effect {
 
-    public abstract class TextEffect : MonoBehaviour {
+    public abstract class TextEffect : MonoBehaviour, ITextEffect {
 
-        protected List < (int, int) > _intervalValues = new List < (int, int) > ();
+        protected List<(int, int)> _intervalValues = new List<(int, int)>();
         protected TMP_Text _textComponent;
         protected bool _hasTextChanged;
         protected BaseTextWriter _textWriter;
 
         protected Coroutine _effectCoroutine;
 
-        void Awake () {
-            
-            _textComponent = GetComponent<TMP_Text> ();
-            _textWriter = GetComponentInParent<BaseTextWriter> ();
+        void Awake() {
+
+            _textComponent = GetComponent<TMP_Text>();
+            _textWriter = GetComponentInParent<BaseTextWriter>();
+            _textWriter.RegisterEffect(this);
         }
 
-        protected virtual void OnEnable () {
+        protected virtual void OnEnable() {
 
-            TMPro_EventManager.TEXT_CHANGED_EVENT.Add (OnTextChanged);
-            _effectCoroutine = StartCoroutine (Effect ());
+            TMPro_EventManager.TEXT_CHANGED_EVENT.Add(OnTextChanged);
+            _effectCoroutine = StartCoroutine(Effect());
+            _textWriter.UnregisterEffect(this);
         }
 
-        protected virtual void OnDisable () {
+        protected virtual void OnDisable() {
 
-            TMPro_EventManager.TEXT_CHANGED_EVENT.Remove (OnTextChanged);
-            if (_effectCoroutine != null) StopCoroutine (_effectCoroutine);
+            TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(OnTextChanged);
+            if (_effectCoroutine != null) StopCoroutine(_effectCoroutine);
         }
 
-        void OnTextChanged (Object obj) {
+        void OnTextChanged(Object obj) {
 
             if (obj == _textComponent)
                 _hasTextChanged = true;
         }
 
-        protected virtual IEnumerator Effect () { yield return null; }
+        protected virtual IEnumerator Effect() { yield return null; }
+
+        public virtual void SetParameters(List<float> parameters) { throw new System.NotImplementedException(); }
+        public virtual void RegisterValues(int start, int end) { throw new System.NotImplementedException(); }
+        
+        public virtual void ClearValues() {
+
+            _intervalValues.Clear();
+        }
     }
 }

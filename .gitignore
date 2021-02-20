@@ -60,5 +60,4 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-
-# End of https://www.toptal.com/developers/gitignore/api/unity
+omnisharp.json

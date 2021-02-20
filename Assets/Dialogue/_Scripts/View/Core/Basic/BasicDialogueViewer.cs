@@ -14,7 +14,6 @@ namespace Dialogues.View {
         public override void ConfigureDialogue (Dialogue dialogue) {
 
             _characterSprite.sprite = dialogue.GetExpressionFromIndex ().Sprite;
-            _textBox.maxVisibleCharacters = 0;
             
             TextWriter.SetTextAndBox (dialogue.Text, _textBox);
         }

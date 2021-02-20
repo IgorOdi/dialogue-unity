@@ -6,7 +6,7 @@ using UnityEngine;
 //BASED ON WARP EXAMPLE FROM TEXT MESH PRO EXAMPLE
 namespace Dialogues.View.Effect {
 
-    public class WarpEffect : TextEffect, ITextEffect {
+    public class WarpEffect : TextEffect {
 
         [SerializeField]
         private AnimationCurve _vertexCurve = new AnimationCurve (new Keyframe (0, 0), new Keyframe (0.25f, 2.0f),
@@ -33,7 +33,7 @@ namespace Dialogues.View.Effect {
             base.OnDisable ();
         }
 
-        public void RegisterValues (int start, int end) {
+        public override void RegisterValues (int start, int end) {
 
             if (_intervalValues.Count > 0 && _intervalValues[_intervalValues.Count - 1].Item2 == 999) {
 
@@ -44,17 +44,12 @@ namespace Dialogues.View.Effect {
             }
         }
 
-        public void SetParameters (List<float> parameters) {
+        public override void SetParameters (List<float> parameters) {
 
             if (parameters == null) return;
 
             if (parameters.Count > 0) _curveScale = parameters[0];
             if (parameters.Count > 1) _speedMultiplier = parameters[1];
-        }
-
-        public void ClearValues () {
-
-            _intervalValues.Clear ();
         }
 
         private AnimationCurve CopyAnimationCurve (AnimationCurve curve) {

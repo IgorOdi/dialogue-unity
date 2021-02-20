@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using Dialogues.Model;
 using Dialogues.View;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Dialogues.Controller.Core {
 
-    public class DialogueManager : MonoBehaviour {
+    internal class DialogueManager : MonoBehaviour {
 
-        public static DialogueManager Instance {
+        internal static DialogueManager Instance {
             get { return _instance; }
             private set { }
         }
         private static DialogueManager _instance;
-        private const string DIALOGUE_SCENE_NAME = "BasicDialogue";
 
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InstantiateManager () {
@@ -24,26 +25,17 @@ namespace Dialogues.Controller.Core {
             DontDestroyOnLoad (manager);
         }
 
-        public void RunDialogue (string dialogueSceneName, Action<BaseDialogueViewer> callback) {
+        internal void RunDialogue (Action<BaseDialogueViewer> callback) {
 
-            InternalUnloadDialogue (DIALOGUE_SCENE_NAME, null);
-            InternalRunDialogue (dialogueSceneName, callback);
+            InternalUnloadDialogue (DialoguePreferences.Instance.DialogueScene, () => {
+
+                InternalRunDialogue (DialoguePreferences.Instance.DialogueScene, callback);
+            });
         }
 
-        public void RunDialogue (Action<BaseDialogueViewer> callback) {
+        internal void UnloadDialogue (Action callback) {
 
-            InternalUnloadDialogue (DIALOGUE_SCENE_NAME, null);
-            InternalRunDialogue (DIALOGUE_SCENE_NAME, callback);
-        }
-
-        public void UnloadDialogue (string dialogueSceneName, Action callback) {
-
-            InternalUnloadDialogue (dialogueSceneName, callback);
-        }
-
-        public void UnloadDialogue (Action callback) {
-
-            InternalUnloadDialogue (DIALOGUE_SCENE_NAME, callback);
+            InternalUnloadDialogue (DialoguePreferences.Instance.DialogueScene, callback);
         }
 
         private void InternalRunDialogue (string sceneName, Action<BaseDialogueViewer> callback) {
@@ -59,10 +51,13 @@ namespace Dialogues.Controller.Core {
         private void InternalUnloadDialogue (string sceneName, Action callback) {
 
             if (IsSceneActive (sceneName)) {
-                SceneManager.UnloadSceneAsync (DIALOGUE_SCENE_NAME).completed += (operation) => {
+                SceneManager.UnloadSceneAsync (sceneName).completed += (operation) => {
 
                     callback?.Invoke ();
                 };
+            } else {
+
+                callback?.Invoke ();
             }
         }
 
