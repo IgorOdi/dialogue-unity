@@ -1,21 +1,33 @@
-﻿using Dialogues.Model;
+﻿using Dialogues.Controller.Core;
+using Dialogues.Model;
+using Dialogues.Model.Core;
 using UnityEngine;
 
 public class DialogueTester : MonoBehaviour {
 
-    public Dialogues.Model.Core.DialogueAsset dialogueAsset;
+	public BasicDialogueAsset dialogueAsset;
 
-    void Start () {
+	void Start() {
 
-        FindObjectOfType<Dialogues.Controller.Core.DialogueController> ().ShowDialogue (dialogueAsset);
-    }
+		FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
+	}
 
-    void Update () {
+	void Update() {
 
-        if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space)) {
 
-            DialoguePreferences.Instance.DialogueScene = "BigCharDialogue";
-            FindObjectOfType<Dialogues.Controller.Core.DialogueController> ().ShowDialogue (dialogueAsset);
-        }
-    }
+			DialoguePreferences.Instance.DialogueScene = "[VisualNovel] Dialogue";
+			FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
+		}
+	}
+
+	public void CallA() {
+
+		Debug.Log ("A");
+	}
+
+	public void CallB() {
+
+		Debug.Log ("B");
+	}
 }

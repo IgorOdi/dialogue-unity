@@ -4,6 +4,8 @@ namespace Dialogues.Model {
 
     internal class DialoguePreferences : ScriptableObject {
 
+        internal static bool SystemEnabled = true;
+
         internal static DialoguePreferences Instance { get; private set; }
 
         [SerializeField, Range (0.01f, 0.1f)]

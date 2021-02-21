@@ -13,7 +13,11 @@ namespace Dialogues.Model.Tags {
                 return new List<Tag> {
 
                     new Tag ("cs",
-                        (textWriter, position, parameters) => Debug.Log ("Hello World"),
+                        (textWriter, position, parameters) => {
+
+                            if (parameters == null || parameters.Count <= 0) textWriter.Context.CustomScripts.CallAllEvents();
+                            else textWriter.Context.CustomScripts.CallEvent((int)parameters[0]);
+                        },
                         null),
 
                     new Tag ("t",
@@ -42,9 +46,9 @@ namespace Dialogues.Model.Tags {
             }
         }
 
-        public static Tag GetTagWithString (string tagComparison) {
+        public static Tag GetTagWithString(string tagComparison) {
 
-            return TagList.Where (t => tagComparison.Contains (t.TagString)).FirstOrDefault ();
+            return TagList.Where(t => tagComparison.Contains(t.TagString)).FirstOrDefault();
         }
     }
 }

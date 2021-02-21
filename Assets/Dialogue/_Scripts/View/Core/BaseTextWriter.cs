@@ -12,6 +12,7 @@ namespace Dialogues.View {
 
     public class BaseTextWriter : MonoBehaviour {
 
+        public DialogueController Context { get; set; }
         public virtual float CurrentWriteTime { get; set; }
         public virtual bool IsFilling { get; private set; }
 
@@ -19,28 +20,22 @@ namespace Dialogues.View {
         private TextMeshProUGUI _textBox;
         private Coroutine _fillCoroutine;
         private List<TagInfo> _decodifiedTags;
-        private List<ITextEffect> _textEffects = new List<ITextEffect> ();
+        private List<ITextEffect> _textEffects = new List<ITextEffect>();
         private int _lastTagIndex = -1;
 
-        void Awake () {
+        public virtual void WriteText() {
 
-            /* foreach (ITextEffect t in GetComponentsInChildren<ITextEffect> ())
-                RegisterEffect (t); */
-        }
-
-        public virtual void WriteText () {
-
-            ResetFillingTime ();
-            (_decodifiedTags, _currentText) = TagDecodifier.Decodify (_currentText);
+            ResetFillingTime();
+            (_decodifiedTags, _currentText) = TagDecodifier.Decodify(_currentText);
 
             for (int i = 0; i < _textEffects.Count; i++)
-                _textEffects[i].ClearValues ();
+                _textEffects[i].ClearValues();
 
-            if (_fillCoroutine != null) StopCoroutine (_fillCoroutine);
-            _fillCoroutine = StartCoroutine (FillText ());
+            if (_fillCoroutine != null) StopCoroutine(_fillCoroutine);
+            _fillCoroutine = StartCoroutine(FillText());
         }
 
-        protected virtual IEnumerator FillText () {
+        protected virtual IEnumerator FillText() {
 
             IsFilling = true;
             _textBox.maxVisibleCharacters = 0;
@@ -49,27 +44,27 @@ namespace Dialogues.View {
 
             while (_textBox.maxVisibleCharacters < _textBox.textInfo.characterCount) {
 
-                if (_decodifiedTags.Exists (i => i.TagPosition == _textBox.maxVisibleCharacters)) {
+                if (_decodifiedTags.Exists(i => i.TagPosition == _textBox.maxVisibleCharacters)) {
 
                     _lastTagIndex += 1;
-                    _decodifiedTags[_lastTagIndex].OnTag?.Invoke (this,
+                    _decodifiedTags[_lastTagIndex].OnTag?.Invoke(this,
                         _decodifiedTags[_lastTagIndex].TagPosition,
                         _decodifiedTags[_lastTagIndex].Parameters);
                 }
 
                 _textBox.maxVisibleCharacters += 1;
-                yield return new WaitForSeconds (CurrentWriteTime);
+                yield return new WaitForSeconds(CurrentWriteTime);
             }
 
             IsFilling = false;
         }
 
-        public virtual void AutoFillText () {
+        public virtual void AutoFillText() {
 
             _textBox.maxVisibleCharacters = _textBox.textInfo.characterCount;
             for (int i = _lastTagIndex + 1; i < _decodifiedTags.Count; i++) {
 
-                _decodifiedTags[i].OnTag?.Invoke (this,
+                _decodifiedTags[i].OnTag?.Invoke(this,
                     _decodifiedTags[i].TagPosition,
                     _decodifiedTags[i].Parameters);
 
@@ -77,28 +72,28 @@ namespace Dialogues.View {
             }
         }
 
-        public virtual void SetTextAndBox (string text, TextMeshProUGUI textBox) {
+        public virtual void SetTextAndBox(string text, TextMeshProUGUI textBox) {
 
             _textBox = textBox;
             _currentText = text;
         }
 
-        public void RegisterEffect (ITextEffect effect) {
+        public void RegisterEffect(ITextEffect effect) {
 
-            _textEffects.Add (effect);
+            _textEffects.Add(effect);
         }
 
-        public void UnregisterEffect (ITextEffect effect) {
+        public void UnregisterEffect(ITextEffect effect) {
 
-            _textEffects.Remove (effect);
+            _textEffects.Remove(effect);
         }
 
-        public ITextEffect GetEffect<T> () where T : TextEffect {
+        public ITextEffect GetEffect<T>() where T : TextEffect {
 
-            return _textEffects.Where (t => t.GetType () == typeof (T)).FirstOrDefault ();
+            return _textEffects.Where(t => t.GetType() == typeof(T)).FirstOrDefault();
         }
 
-        private void ResetFillingTime () {
+        private void ResetFillingTime() {
 
             CurrentWriteTime = DialoguePreferences.Instance.BaseWriteTime;
         }

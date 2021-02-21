@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Dialogues.Model;
 using Dialogues.View;
 using UnityEngine;
@@ -17,6 +16,8 @@ namespace Dialogues.Controller.Core {
 
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InstantiateManager () {
+
+            if (!DialoguePreferences.SystemEnabled) return;
 
             GameObject manager = new GameObject ("DialogueManager");
             manager.AddComponent (typeof (DialogueManager));
