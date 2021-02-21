@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dialogues.Model.Tags;
+using UnityEngine;
 
 namespace Dialogues.View.Tags {
 
@@ -40,12 +41,16 @@ namespace Dialogues.View.Tags {
 					}
 
 					string tagString = text.Substring (i, indexOfCloseTag - i);
+					Tag tag = TagDatabase.GetTagWithString (tagString);
+					if (tag == null) {
+
+						continue;
+					}
+
 					List<float> parameter = tagString.Contains ("=") ? DecodifyParameter (tagString) : null;
 					bool isOpening = !tagString[1].Equals ('/');
 
-					Tag tag = TagDatabase.GetTagWithString (tagString);
 					text = text.Remove (i, indexOfCloseTag - i);
-                    
 					tagInfos.Add (new TagInfo (i, parameter, isOpening ? tag.OnOpenTag : tag.OnCloseTag));
 				}
 			}

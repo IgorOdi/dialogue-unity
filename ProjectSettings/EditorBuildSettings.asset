@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Dialogue/Scenes/Game.unity
     guid: 9af41a36eb8f13744a45442103546df5
   - enabled: 1
-    path: Assets/Dialogue/Scenes/[Basic] Dialogue.unity
+    path: Assets/Dialogue/Scenes/[Dialogue] Basic.unity
     guid: 44f2544354b20c048a0d322ba79cb196
   - enabled: 1
-    path: Assets/Dialogue/Scenes/[VisualNovel] Dialogue.unity
+    path: Assets/Dialogue/Scenes/[Dialogue] VisualNovel.unity
     guid: f43262da972d5cd4380d85470fb79336
   m_configObjects: {}

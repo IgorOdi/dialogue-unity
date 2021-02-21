@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b12c1bcf7bc3afd479f2c6f786b18887, type: 3}
-  m_Name: New Dialogue Asset
+  m_Name: New Basic Dialogue Asset
   m_EditorClassIdentifier: 
   Dialogues:
-  - Text: Oioi
+  - Text: sadjakhsdkjash <t=0,5>asuhdukhashukdad</t> ausydukashud
+    Character: {fileID: 11400000, guid: a2ee24eabea8706479fec18222099131, type: 2}
+    ExpressionIndex: 2
+    Side: 1
+  - Text: asdkjashkjd <wave>asuhdkuhasd</wave>
     Character: {fileID: 11400000, guid: 7a3783256c4fa8a418b08abbe7c750cd, type: 2}
     ExpressionIndex: 0
     Side: 0
-  - Text: Oioi Oioi OioiOioi Oioi OioiOioiOioi
-    Character: {fileID: 11400000, guid: a2ee24eabea8706479fec18222099131, type: 2}
-    ExpressionIndex: 1
-    Side: 1

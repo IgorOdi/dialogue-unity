@@ -1,5 +1,4 @@
 ﻿using Dialogues.Controller.Core;
-using Dialogues.Model;
 using Dialogues.Model.Core;
 using UnityEngine;
 
@@ -16,7 +15,6 @@ public class DialogueTester : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
 
-			DialoguePreferences.Instance.DialogueScene = "[VisualNovel] Dialogue";
 			FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
 		}
 	}
