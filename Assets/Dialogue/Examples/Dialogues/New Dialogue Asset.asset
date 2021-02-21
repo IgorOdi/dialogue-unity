@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12c1bcf7bc3afd479f2c6f786b18887, type: 3}
+  m_Name: New Dialogue Asset
+  m_EditorClassIdentifier: 
+  Dialogues:
+  - Text: Oioi
+    Character: {fileID: 11400000, guid: 7a3783256c4fa8a418b08abbe7c750cd, type: 2}
+    ExpressionIndex: 0
+    Side: 0
+  - Text: Oioi Oioi OioiOioi Oioi OioiOioiOioi
+    Character: {fileID: 11400000, guid: a2ee24eabea8706479fec18222099131, type: 2}
+    ExpressionIndex: 1
+    Side: 1

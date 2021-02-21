@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Preferences
   m_EditorClassIdentifier: 
   BaseWriteTime: 0.05
-  DialogueScene: '[Dialogue] VisualNovel'
+  DialogueScene: '[Basic] Dialogue'

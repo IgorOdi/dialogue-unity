@@ -16,7 +16,9 @@ namespace Dialogues.View {
             BasicDialogue basicDialogue = (BasicDialogue)dialogue;
 
             _characterSprite.sprite = basicDialogue.GetExpressionFromIndex ().Sprite;
-            TextWriter.SetTextAndBox (basicDialogue.Text, _textBox);
+
+            string text = dialogue.Text.Insert (0, $"<b><color=yellow><size=120%>{basicDialogue.Character.Name}:</b></color></size=120%> ");
+            TextWriter.SetTextAndBox (text, _textBox);
         }
     }
 }
