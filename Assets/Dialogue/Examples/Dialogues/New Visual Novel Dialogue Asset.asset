@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1abf9ac6c7959d14aba5bc069362b61a, type: 3}
+  m_Name: New Visual Novel Dialogue Asset
+  m_EditorClassIdentifier: 
+  Dialogues:
+  - Text: auhsuhakskuh auhskuahs
+    Character: {fileID: 11400000, guid: 7424053e266e97c45b1fcd2464ca52ab, type: 2}
+    ExpressionIndex: 0
+    Side: 0
+  - Text: skdlsdkfsoijk auhsdhuahsukd
+    Character: {fileID: 11400000, guid: d381f71f2d80e8a4a9b0bedbcb780bdc, type: 2}
+    ExpressionIndex: 1
+    Side: 4

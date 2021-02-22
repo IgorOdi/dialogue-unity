@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dialogues.View;
+using Dialogues.View.Core;
 
 namespace Dialogues.Model.Tags {
 

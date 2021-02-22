@@ -2,30 +2,34 @@
 using Dialogues.Model.Core;
 using UnityEngine;
 
-public class DialogueTester : MonoBehaviour {
+namespace Dialogues.Tests {
 
-	public BasicDialogueAsset dialogueAsset;
+	public class DialogueTester : MonoBehaviour {
 
-	void Start() {
+		public BaseDialogueAsset dialogueAsset;
 
-		FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
-	}
+		void Start() {
 
-	void Update() {
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-
+			//dialogueAsset = dialogueAsset2;
 			FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
 		}
-	}
 
-	public void CallA() {
+		void Update() {
 
-		Debug.Log ("A");
-	}
+			if (Input.GetKeyDown (KeyCode.Space)) {
 
-	public void CallB() {
+				FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
+			}
+		}
 
-		Debug.Log ("B");
+		public void CallA() {
+
+			Debug.Log ("A");
+		}
+
+		public void CallB() {
+
+			Debug.Log ("B");
+		}
 	}
 }

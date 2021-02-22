@@ -1,6 +1,7 @@
 ﻿using System;
 using Dialogues.Model;
 using Dialogues.View;
+using Dialogues.View.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

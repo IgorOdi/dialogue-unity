@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a78b173df5332b469810ed9ec14d084, type: 3}
+  m_Name: 01
+  m_EditorClassIdentifier: 
+  Name: Char01
+  Expressions:
+  - Name: Happy
+    Sprite: {fileID: 21300000, guid: d5d39ce47582a61439658cd66476fb4a, type: 3}
+  - Name: Neutral
+    Sprite: {fileID: 21300000, guid: bd9e7989d69f8084f8c497150fe76601, type: 3}

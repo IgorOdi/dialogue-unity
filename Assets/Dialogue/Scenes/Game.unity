@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38036973f1bfcc48a4de37dc51c159d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueAsset: {fileID: 11400000, guid: c773321adb1f7d146801af3809df4f93, type: 2}
+  dialogueAsset: {fileID: 11400000, guid: e769b2565e1d18649969579c6773efd7, type: 2}
 --- !u!1 &988010994
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   Events:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621336256}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueTester, Dialogue
         m_MethodName: CallA
         m_Mode: 1
@@ -324,7 +324,7 @@ MonoBehaviour:
         m_CallState: 2
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621336256}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueTester, Dialogue
         m_MethodName: CallB
         m_Mode: 1

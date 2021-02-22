@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dialogues.View.Effect;
+using Dialogues.View.Effects;
 using UnityEngine;
 
 namespace Dialogues.Model.Tags {

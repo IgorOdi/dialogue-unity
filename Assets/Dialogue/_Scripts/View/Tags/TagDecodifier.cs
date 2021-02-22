@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dialogues.Model.Tags;
-using UnityEngine;
+using Dialogues.View.Core;
 
 namespace Dialogues.View.Tags {
 
