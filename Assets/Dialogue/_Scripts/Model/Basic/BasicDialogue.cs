@@ -16,6 +16,7 @@ namespace Dialogues.Model.Basic {
 			return Character.Expressions[ExpressionIndex];
 		}
 
+
 		public Expression GetExpressionFromName(string expressionName) {
 
 			return Character.Expressions.Where (e => e.Name.Equals (expressionName)).FirstOrDefault ();

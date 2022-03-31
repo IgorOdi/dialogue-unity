@@ -1,33 +1,25 @@
 ﻿using System;
 using Dialogues.Model;
-using Dialogues.View;
 using Dialogues.View.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Dialogues.Controller.Core {
 
-    internal class DialogueManager : MonoBehaviour {
-
-        internal static DialogueManager Instance {
-            get { return _instance; }
-            private set { }
-        }
-        private static DialogueManager _instance;
+	internal class DialogueManager : MonoBehaviour {
 
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InstantiateManager () {
 
             if (!DialoguePreferences.SystemEnabled) return;
 
-            GameObject manager = new GameObject ("DialogueManager");
-            manager.AddComponent (typeof (DialogueManager));
-            _instance = manager.GetComponent<DialogueManager> ();
+            //GameObject manager = new GameObject ("DialogueManager");
+            //manager.AddComponent (typeof (DialogueManager));
             Model.DialoguePreferences.Init ();
-            DontDestroyOnLoad (manager);
+            //DontDestroyOnLoad (manager);
         }
 
-        internal void RunDialogue (Action<BaseDialogueViewer> callback) {
+        internal static void RunDialogue (Action<BaseDialogueViewer> callback) {
 
             InternalUnloadDialogue (DialoguePreferences.Instance.DialogueScene, () => {
 
@@ -35,12 +27,12 @@ namespace Dialogues.Controller.Core {
             });
         }
 
-        internal void UnloadDialogue (Action callback) {
+        internal static void UnloadDialogue (Action callback) {
 
             InternalUnloadDialogue (DialoguePreferences.Instance.DialogueScene, callback);
         }
 
-        private void InternalRunDialogue (string sceneName, Action<BaseDialogueViewer> callback) {
+        private static void InternalRunDialogue (string sceneName, Action<BaseDialogueViewer> callback) {
 
             SceneManager.LoadSceneAsync (sceneName, LoadSceneMode.Additive).completed += (operation) => {
 
@@ -50,7 +42,7 @@ namespace Dialogues.Controller.Core {
             };
         }
 
-        private void InternalUnloadDialogue (string sceneName, Action callback) {
+        private static void InternalUnloadDialogue (string sceneName, Action callback) {
 
             if (IsSceneActive (sceneName)) {
                 SceneManager.UnloadSceneAsync (sceneName).completed += (operation) => {
@@ -63,7 +55,7 @@ namespace Dialogues.Controller.Core {
             }
         }
 
-        private bool IsSceneActive (string sceneName) {
+        private static bool IsSceneActive (string sceneName) {
 
             for (int i = 0; i < SceneManager.sceneCount; i++) {
 

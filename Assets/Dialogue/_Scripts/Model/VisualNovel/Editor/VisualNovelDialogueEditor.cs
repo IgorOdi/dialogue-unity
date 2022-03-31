@@ -1,4 +1,5 @@
-﻿using Dialogues.Model.Core;
+﻿using System.Collections.Generic;
+using Dialogues.Model.Core;
 using Dialogues.Model.Enum;
 using UnityEditor;
 using UnityEngine;
@@ -8,22 +9,27 @@ namespace Dialogues.Model.VisualNovel.Editor {
 	[CustomPropertyDrawer (typeof (VisualNovelDialogue))]
 	public class VisualNovelDialogueEditor : PropertyDrawer {
 
-		private SerializedProperty _characterProperty;
-		private SerializedProperty _expressionProperty;
-		private SerializedProperty _textProperty;
-		private SerializedProperty _sideProperty;
+		private SerializedProperty characterProperty;
+		private SerializedProperty expressionProperty;
+		private SerializedProperty textProperty;
+		private SerializedProperty sideProperty;
+		private SerializedProperty commandProperty;
 
-		private const int LINE_AMOUNT = 4;
+		private const int LINE_AMOUNT = 5;
 		private const int TEXT_LINE_AMOUNT = 4;
 
 		private const string CHARACTER_PROPERTY_NAME = "Character";
 		private const string EXPRESSION_PROPERTY_NAME = "ExpressionIndex";
 		private const string TEXT_PROPERTY_NAME = "Text";
 		private const string SIDE_PROPERTY_NAME = "Side";
+		private const string COMMAND_PROPERTY_NAME = "Command";
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 
-			return property.isExpanded ? base.GetPropertyHeight (property, label) * LINE_AMOUNT + EditorGUIUtility.singleLineHeight * TEXT_LINE_AMOUNT :
+			var commandProperty = property.FindPropertyRelative (COMMAND_PROPERTY_NAME);
+			int commandArraySize = commandProperty.isExpanded ? commandProperty.arraySize * 2 : 0;
+			return property.isExpanded ? base.GetPropertyHeight (property, label) * LINE_AMOUNT + EditorGUIUtility.singleLineHeight *
+				(TEXT_LINE_AMOUNT + commandArraySize) :
 				EditorGUIUtility.singleLineHeight;
 		}
 
@@ -36,28 +42,47 @@ namespace Dialogues.Model.VisualNovel.Editor {
 
 			if (property.isExpanded) {
 
-				_characterProperty = property.FindPropertyRelative (CHARACTER_PROPERTY_NAME);
-				_expressionProperty = property.FindPropertyRelative (EXPRESSION_PROPERTY_NAME);
-				_textProperty = property.FindPropertyRelative (TEXT_PROPERTY_NAME);
-				_sideProperty = property.FindPropertyRelative (SIDE_PROPERTY_NAME);
+				characterProperty = property.FindPropertyRelative (CHARACTER_PROPERTY_NAME);
+				expressionProperty = property.FindPropertyRelative (EXPRESSION_PROPERTY_NAME);
+				textProperty = property.FindPropertyRelative (TEXT_PROPERTY_NAME);
+				sideProperty = property.FindPropertyRelative (SIDE_PROPERTY_NAME);
+				commandProperty = property.FindPropertyRelative (COMMAND_PROPERTY_NAME);
 
 				EditorGUI.indentLevel++;
 
 				var characterRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight, position.width, EditorGUIUtility.singleLineHeight);
+				characterProperty.objectReferenceValue = EditorGUI.ObjectField (characterRect, CHARACTER_PROPERTY_NAME,
+					characterProperty.objectReferenceValue, typeof (Character), false);
+
 				var expressionRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * 2, position.width, EditorGUIUtility.singleLineHeight);
+				expressionProperty.intValue = EditorGUI.Popup (expressionRect, EXPRESSION_PROPERTY_NAME,
+					expressionProperty.intValue, GetExpressionNames (characterProperty));
+
 				var sideRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * 3, position.width, EditorGUIUtility.singleLineHeight);
-				var textRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * 4, position.width, EditorGUIUtility.singleLineHeight * TEXT_LINE_AMOUNT);
+				sideProperty.enumValueIndex = (int) ((Sides) EditorGUI.EnumPopup (sideRect, SIDE_PROPERTY_NAME, (Sides) sideProperty.enumValueIndex));
 
-				_characterProperty.objectReferenceValue = EditorGUI.ObjectField (characterRect, CHARACTER_PROPERTY_NAME,
-					_characterProperty.objectReferenceValue, typeof (Character), false);
+				var commandBase = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * 4, position.width / 2, EditorGUIUtility.singleLineHeight);
+				var commandSize = new Rect (position.x + position.width / 2.85f, position.y + EditorGUIUtility.singleLineHeight * 4, position.width / 1.55f, EditorGUIUtility.singleLineHeight);
 
-				_expressionProperty.intValue = EditorGUI.Popup (expressionRect, EXPRESSION_PROPERTY_NAME,
-					_expressionProperty.intValue, GetExpressionNames (_characterProperty));
+				commandProperty.arraySize = EditorGUI.IntField (commandSize, "Size", commandProperty.arraySize);
+				commandProperty.isExpanded = EditorGUI.Foldout (commandBase, commandProperty.isExpanded, "Command");
+				if (commandProperty.isExpanded) {
 
-				_sideProperty.enumValueIndex = (int) ((Sides) EditorGUI.EnumPopup (sideRect, SIDE_PROPERTY_NAME, (Sides) _sideProperty.enumValueIndex));
+					EditorGUI.indentLevel++;
 
-				_textProperty.stringValue = EditorGUI.TextField (textRect, TEXT_PROPERTY_NAME, _textProperty.stringValue);
+					var commandIndexRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * 5, position.width, EditorGUIUtility.singleLineHeight);
+					for (int i = 0; i < commandProperty.arraySize; i++) {
 
+						var current = commandProperty.GetArrayElementAtIndex (i);
+						commandIndexRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * (5 + i * 2), position.width, EditorGUIUtility.singleLineHeight);
+						EditorGUI.PropertyField (commandIndexRect, current);
+					}
+					EditorGUI.indentLevel--;
+				}
+
+				int textRectPrevArrayMultiplier = commandProperty.isExpanded ? commandProperty.arraySize : 0;
+				var textRect = new Rect (position.x, position.y + EditorGUIUtility.singleLineHeight * (5 + textRectPrevArrayMultiplier * 2), position.width, EditorGUIUtility.singleLineHeight * TEXT_LINE_AMOUNT);
+				textProperty.stringValue = EditorGUI.TextField (textRect, TEXT_PROPERTY_NAME, textProperty.stringValue);
 			}
 			EditorGUI.EndProperty ();
 		}
