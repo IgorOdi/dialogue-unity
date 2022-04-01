@@ -1,4 +1,6 @@
-﻿using Dialogues.Model.Core;
+﻿using Dialogues.Model.Basic;
+using Dialogues.Model.Core;
+using Dialogues.View.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
