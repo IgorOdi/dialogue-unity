@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using Dialogues.Model.Core;
-using Dialogues.View;
 using Dialogues.View.Core;
 using UnityEngine;
 
@@ -8,7 +8,11 @@ namespace Dialogues.Controller.Core {
 
 	public class DialogueController : MonoBehaviour {
 
+		public Action OnDialogueBoxOpen;
+		public Action OnDialogueFinishes;
+		public Action OnDialogueBoxClose;
 		public DialogueCustomScripts CustomScripts { get; private set; }
+
 		[HideInInspector] public bool _isDisplayingDialogue;
 		private int _dialogueCount;
 		private int _currentDialogueIndex;
@@ -38,6 +42,7 @@ namespace Dialogues.Controller.Core {
 						StopCoroutine (_updateCoroutine);
 					}
 					_updateCoroutine = StartCoroutine (UpdateDialogue (dialogueAsset));
+					OnDialogueBoxOpen?.Invoke ();
 				});
 			});
 		}
@@ -71,11 +76,12 @@ namespace Dialogues.Controller.Core {
 		private void FinishDialogue() {
 
 			//TODO: Check Conditions to Next
+			OnDialogueFinishes?.Invoke ();
 			StopCoroutine (_updateCoroutine);
 			_dialogueViewer.DialogueAnimator.CloseDialogueBox (() => {
 
 				_isDisplayingDialogue = false;
-				DialogueManager.UnloadDialogue (null);
+				DialogueManager.UnloadDialogue (OnDialogueBoxClose);
 			});
 		}
 	}
