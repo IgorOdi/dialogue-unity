@@ -27,7 +27,7 @@ namespace Dialogues.Controller.Core {
 		public void ShowDialogue(IDialogueAsset dialogueAsset) {
 
 			_isDisplayingDialogue = true;
-			DialogueManager.RunDialogue ((dialogueViewer) => {
+			DialogueSceneManager.RunDialogue ((dialogueViewer) => {
 
 				_dialogueViewer = dialogueViewer;
 				_dialogueViewer.TextWriter.Context = this;
@@ -81,7 +81,7 @@ namespace Dialogues.Controller.Core {
 			_dialogueViewer.DialogueAnimator.CloseDialogueBox (() => {
 
 				_isDisplayingDialogue = false;
-				DialogueManager.UnloadDialogue (OnDialogueBoxClose);
+				DialogueSceneManager.UnloadDialogue (OnDialogueBoxClose);
 			});
 		}
 	}

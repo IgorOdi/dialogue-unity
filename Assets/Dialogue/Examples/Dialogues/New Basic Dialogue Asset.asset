@@ -17,7 +17,4 @@ MonoBehaviour:
     Character: {fileID: 11400000, guid: 7a3783256c4fa8a418b08abbe7c750cd, type: 2}
     ExpressionIndex: 2
     Side: 0
-  - Text: asdkjashkjd <wave>asuhdkuhasd</wave>
-    Character: {fileID: 11400000, guid: a2ee24eabea8706479fec18222099131, type: 2}
-    ExpressionIndex: 0
-    Side: 1
+    Choices: []

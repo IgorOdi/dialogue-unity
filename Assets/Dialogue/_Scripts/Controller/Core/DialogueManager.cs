@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Dialogues.Controller.Core {
 
-	internal class DialogueManager : MonoBehaviour {
+	internal class DialogueSceneManager : MonoBehaviour {
 
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InstantiateManager () {

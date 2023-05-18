@@ -17,11 +17,13 @@ MonoBehaviour:
     Character: {fileID: 11400000, guid: 7424053e266e97c45b1fcd2464ca52ab, type: 2}
     ExpressionIndex: 0
     Side: 0
+    Choices: []
     Command: []
   - Text: skdlsdkfsoijk <wave=1/1/1>auhsdhuahsukd</wave>auhsdhuahsukd
     Character: {fileID: 11400000, guid: d381f71f2d80e8a4a9b0bedbcb780bdc, type: 2}
     ExpressionIndex: 0
     Side: 4
+    Choices: []
     Command:
     - CommandType: 0
       Character: {fileID: 11400000, guid: 4f73de2ebfa4aa24ea0dd1c32e0f2891, type: 2}
