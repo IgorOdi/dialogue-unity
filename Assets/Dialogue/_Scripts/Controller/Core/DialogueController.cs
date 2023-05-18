@@ -23,7 +23,7 @@ namespace Dialogues.Controller.Core {
 
 		private KeyCode keyCode = KeyCode.Mouse0;
 
-		private Dictionary<string, string> SavedVariables = new Dictionary<string, string> ();
+		private static Dictionary<string, string> SavedVariables = new Dictionary<string, string> ();
 
 		void Awake() => CustomScripts = GetComponentInChildren<DialogueCustomScripts> ();
 
