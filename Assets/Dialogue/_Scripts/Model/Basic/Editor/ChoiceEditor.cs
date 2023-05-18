@@ -49,7 +49,7 @@ namespace Dialogues.Model.Basic.Editor
 				_textProperty.stringValue = EditorGUI.TextField (textFieldRect, TEXT_PROPERTY_NAME, _textProperty.stringValue);
 
 				_nextDialogueProperty.objectReferenceValue = EditorGUI.ObjectField (nextDialogueRect, NEXTDIALOGUE_PROPERTY_NAME, _nextDialogueProperty.objectReferenceValue,
-					typeof (BasicDialogueEditor), false);
+					typeof (BasicDialogueAsset), false);
 
                 EditorGUI.LabelField(outputRect, OUTPUT_VALUE, EditorStyles.boldLabel);
 

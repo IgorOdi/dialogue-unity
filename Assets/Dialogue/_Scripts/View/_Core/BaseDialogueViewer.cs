@@ -7,17 +7,22 @@ namespace Dialogues.View.Core {
 
 	public abstract class BaseDialogueViewer : MonoBehaviour {
 
+		public DialogueController DialogueController { get; private set; }
+
 		public BaseTextWriter TextWriter { get; private set; }
 		public DialogueAnimator DialogueAnimator { get; private set; }
 		public DialogueBoxLayoutData LayoutData { get; private set; }
-		public DialogueController Context { get; private set; }
 
-		public virtual void ConfigureViewer() {
+		public bool IsShowingChoices { get; protected set; }
+
+		public virtual void ConfigureViewer(DialogueController controller) {
 
 			TextWriter = GetComponent<BaseTextWriter> ();
 			DialogueAnimator = GetComponent<DialogueAnimator> ();
 			LayoutData = GetComponent<DialogueBoxLayoutData> ();
-			TextWriter.Context = Context;
+
+			DialogueController = controller;
+			TextWriter.DialogueController = controller;
 		}
 
 		public void CopyFromLayoutData(int index) {
@@ -31,5 +36,6 @@ namespace Dialogues.View.Core {
 		}
 
 		public virtual void ConfigureDialogue(BaseDialogue dialogue) { }
+		public virtual void ShowChoicesButton() { }
 	}
 }

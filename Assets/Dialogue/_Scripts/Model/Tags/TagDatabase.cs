@@ -15,8 +15,8 @@ namespace Dialogues.Model.Tags {
                     new Tag ("cs",
                         (textWriter, position, parameters) => {
 
-                            if (parameters == null || parameters.Count <= 0) textWriter.Context.CustomScripts.CallAllEvents();
-                            else textWriter.Context.CustomScripts.CallEvent((int)parameters[0]);
+                            if (parameters == null || parameters.Count <= 0) textWriter.DialogueController.CustomScripts.CallAllEvents();
+                            else textWriter.DialogueController.CustomScripts.CallEvent((int)parameters[0]);
                         },
                         null),
 

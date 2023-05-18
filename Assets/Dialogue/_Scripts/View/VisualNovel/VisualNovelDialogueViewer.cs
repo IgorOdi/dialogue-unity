@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Dialogues.Controller.Core;
 using Dialogues.Model.Core;
 using Dialogues.Model.VisualNovel;
 using TMPro;
@@ -14,9 +15,9 @@ namespace Dialogues.View.Core {
 		protected List<Image> characterSprites;
 		[SerializeField] protected TextMeshProUGUI _textBox;
 
-		public override void ConfigureViewer() {
+		public override void ConfigureViewer(DialogueController controller) {
 
-			base.ConfigureViewer ();
+			base.ConfigureViewer (controller);
 			for (int i = 0; i < characterSprites.Count; i++) {
 				characterSprites[i].enabled = false;
 			}

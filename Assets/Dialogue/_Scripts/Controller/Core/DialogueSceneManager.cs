@@ -19,11 +19,11 @@ namespace Dialogues.Controller.Core {
             //DontDestroyOnLoad (manager);
         }
 
-        internal static void RunDialogue (Action<BaseDialogueViewer> callback) {
+        internal static void RunDialogue (DialogueController controller, Action<BaseDialogueViewer> callback) {
 
             InternalUnloadDialogue (DialoguePreferences.Instance.DialogueScene, () => {
 
-                InternalRunDialogue (DialoguePreferences.Instance.DialogueScene, callback);
+                InternalRunDialogue (controller, DialoguePreferences.Instance.DialogueScene, callback);
             });
         }
 
@@ -32,12 +32,12 @@ namespace Dialogues.Controller.Core {
             InternalUnloadDialogue (DialoguePreferences.Instance.DialogueScene, callback);
         }
 
-        private static void InternalRunDialogue (string sceneName, Action<BaseDialogueViewer> callback) {
+        private static void InternalRunDialogue (DialogueController controller, string sceneName, Action<BaseDialogueViewer> callback) {
 
             SceneManager.LoadSceneAsync (sceneName, LoadSceneMode.Additive).completed += (operation) => {
 
                 var dialogueViewer = FindObjectOfType<BaseDialogueViewer> ();
-                dialogueViewer.ConfigureViewer ();
+                dialogueViewer.ConfigureViewer (controller);
                 callback?.Invoke (dialogueViewer);
             };
         }
