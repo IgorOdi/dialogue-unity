@@ -10,8 +10,9 @@ namespace Dialogues.Controller.Core {
 	public class DialogueController : MonoBehaviour {
 
 		public Action OnDialogueBoxOpen;
-		public Action OnDialogueFinishes;
 		public Action OnDialogueBoxClose;
+		public Action OnDialogueFinishes;
+		public Action OnDialogueSequenceFinishes;
 		public DialogueCustomScripts CustomScripts { get; private set; }
 
 		public bool IsDisplayingDialogue { get; private set; }
@@ -27,26 +28,38 @@ namespace Dialogues.Controller.Core {
 
 		void Awake() => CustomScripts = GetComponentInChildren<DialogueCustomScripts> ();
 
-		public void ShowDialogue(IDialogueAsset dialogueAsset) {
+		public void ShowDialogue(IDialogueAsset dialogueAsset, bool reload = true) {
 
 			IsDisplayingDialogue = true;
+
+			if (!reload) {
+
+				LoadDialogueViewer (dialogueAsset);
+				return;
+			}
+
 			DialogueSceneManager.RunDialogue (this, (dialogueViewer) => {
 
 				_dialogueViewer = dialogueViewer;
-
-				_dialogueViewer.ConfigureDialogue (dialogueAsset.GetDialogues ()[0]);
 				_dialogueViewer.DialogueAnimator.OpenDialogueBox (() => {
 
-					_dialogueCount = dialogueAsset.GetDialogues ().Count;
-					if (_updateCoroutine != null) {
-
-						StopCoroutine (_updateCoroutine);
-					}
-					_updateCoroutine = StartCoroutine (UpdateDialogue (dialogueAsset));
-					OnDialogueBoxOpen?.Invoke ();
-					OnDialogueBoxOpen = null;
+					LoadDialogueViewer (dialogueAsset);
 				});
 			});
+		}
+
+		private void LoadDialogueViewer(IDialogueAsset dialogueAsset) {
+
+			_dialogueViewer.ConfigureDialogue (dialogueAsset.GetDialogues ()[0]);
+			_dialogueCount = dialogueAsset.GetDialogues ().Count;
+			if (_updateCoroutine != null) {
+
+				StopCoroutine (_updateCoroutine);
+			}
+			_updateCoroutine = StartCoroutine (UpdateDialogue (dialogueAsset));
+
+			OnDialogueBoxOpen?.Invoke ();
+			OnDialogueBoxOpen = null;
 		}
 
 		public IEnumerator UpdateDialogue(IDialogueAsset dialogueAsset) {
@@ -78,18 +91,31 @@ namespace Dialogues.Controller.Core {
 			}
 		}
 
-		public void FinishDialogue() {
+		public void FinishDialogue(BaseDialogueAsset nextDialogueAsset = null) {
 
-			//TODO: Check Conditions to Next
 			OnDialogueFinishes?.Invoke ();
 			OnDialogueFinishes = null;
+
 			StopCoroutine (_updateCoroutine);
+
+			if (nextDialogueAsset != null) {
+
+				ShowDialogue (nextDialogueAsset, false);
+				return;
+			}
+
 			_dialogueViewer.DialogueAnimator.CloseDialogueBox (() => {
 
 				IsDisplayingDialogue = false;
-				//var boxCloseAction = OnDialogueBoxClose; 
-				DialogueSceneManager.UnloadDialogue (OnDialogueBoxClose);
-				OnDialogueBoxClose = null;
+				DialogueSceneManager.UnloadDialogue (() => {
+
+					OnDialogueBoxClose?.Invoke ();
+					OnDialogueSequenceFinishes?.Invoke ();
+
+					OnDialogueBoxClose = null;
+					OnDialogueSequenceFinishes = null;
+				});
+
 			});
 		}
 

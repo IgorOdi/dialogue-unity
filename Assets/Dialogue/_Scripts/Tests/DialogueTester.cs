@@ -10,7 +10,6 @@ namespace Dialogues.Tests {
 
 		void Start() {
 
-			//dialogueAsset = dialogueAsset2;
 			FindObjectOfType<DialogueController> ().ShowDialogue (dialogueAsset);
 		}
 

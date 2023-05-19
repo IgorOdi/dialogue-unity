@@ -23,8 +23,11 @@ namespace Dialogues.View {
 
 			_cachedBasicDialogue = (BasicDialogue) dialogue;
 
-			for (int i = 0; i < _choicesObjects.Length; i++)
+			for (int i = 0; i < _choicesObjects.Length; i++) {
+
 				_choicesObjects[i].gameObject.SetActive (false);
+				_choicesObjects[i].onClick.RemoveAllListeners ();
+			}
 
 			_characterSprite.sprite = _cachedBasicDialogue.GetExpressionFromIndex ().Sprite;
 			CopyFromLayoutData (_cachedBasicDialogue.Side.Equals (Sides.LEFT) ? 0 : 1);
@@ -63,8 +66,7 @@ namespace Dialogues.View {
 
 			if (choice.NextDialogueAsset != null) {
 
-				DialogueController.FinishDialogue ();
-				DialogueController.OnDialogueBoxClose += () => DialogueController.ShowDialogue (choice.NextDialogueAsset);
+				DialogueController.FinishDialogue (choice.NextDialogueAsset);
 				return;
 			}
 
