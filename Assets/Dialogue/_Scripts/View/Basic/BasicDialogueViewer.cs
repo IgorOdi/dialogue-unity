@@ -44,7 +44,7 @@ namespace Dialogues.View {
 
 		public override void ShowChoicesButton() {
 
-			IsShowingChoices = true;
+			IsShowingChoices = _cachedBasicDialogue.Choices.Count > 0;
 
 			for (int i = 0; i < _cachedBasicDialogue.Choices.Count; i++) {
 
