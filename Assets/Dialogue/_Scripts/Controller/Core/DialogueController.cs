@@ -28,7 +28,7 @@ namespace Dialogues.Controller.Core {
 
 		void Awake() => CustomScripts = GetComponentInChildren<DialogueCustomScripts> ();
 
-		public void ShowDialogue(IDialogueAsset dialogueAsset, bool reload = true) {
+		public void ShowDialogue(BaseDialogueAsset dialogueAsset, bool reload = true) {
 
 			IsDisplayingDialogue = true;
 
@@ -48,7 +48,7 @@ namespace Dialogues.Controller.Core {
 			});
 		}
 
-		private void LoadDialogueViewer(IDialogueAsset dialogueAsset) {
+		private void LoadDialogueViewer(BaseDialogueAsset dialogueAsset) {
 
 			_dialogueViewer.ConfigureDialogue (dialogueAsset.GetDialogues ()[0]);
 			_dialogueCount = dialogueAsset.GetDialogues ().Count;
@@ -62,7 +62,7 @@ namespace Dialogues.Controller.Core {
 			OnDialogueBoxOpen = null;
 		}
 
-		public IEnumerator UpdateDialogue(IDialogueAsset dialogueAsset) {
+		public IEnumerator UpdateDialogue(BaseDialogueAsset dialogueAsset) {
 
 			_currentDialogueIndex = 0;
 			_dialogueViewer.TextWriter.WriteText (_dialogueViewer.ShowChoicesButton);

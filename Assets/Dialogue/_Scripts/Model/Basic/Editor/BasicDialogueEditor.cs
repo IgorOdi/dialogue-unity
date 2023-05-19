@@ -32,7 +32,7 @@ namespace Dialogues.Model.Basic.Editor {
 				isChoicesExpanded = 3f;
 				for (int i = 0; i < _choicesProperty.arraySize; i++) {
 
-					float arrayElementIsExpanded = _choicesProperty.GetArrayElementAtIndex(i).isExpanded ? 5.25f : 1f;
+					float arrayElementIsExpanded = _choicesProperty.GetArrayElementAtIndex(i).isExpanded ? 4.5f : 1f;
 					isChoicesExpanded += arrayElementIsExpanded;
 				}
 			}

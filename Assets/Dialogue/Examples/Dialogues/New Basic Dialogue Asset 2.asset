@@ -13,21 +13,8 @@ MonoBehaviour:
   m_Name: New Basic Dialogue Asset 2
   m_EditorClassIdentifier: 
   Dialogues:
-  - Text: "Ol\xE1! <t=0,1>Meu nome \xE9 Tal</t> e preciso de sua ajuda."
+  - Text: Muito obrigada!
     Character: {fileID: 11400000, guid: 7a3783256c4fa8a418b08abbe7c750cd, type: 2}
     ExpressionIndex: 0
     Side: 0
     Choices: []
-  - Text: "Voc\xEA vai me ajudar?"
-    Character: {fileID: 11400000, guid: 7a3783256c4fa8a418b08abbe7c750cd, type: 2}
-    ExpressionIndex: 0
-    Side: 0
-    Choices:
-    - Text: Sim
-      NextDialogueAsset: {fileID: 11400000}
-      VariableName: Teste
-      VariableValue: Feliz
-    - Text: "N\xE3o"
-      NextDialogueAsset: {fileID: 0}
-      VariableName: Maria
-      VariableValue: Forte

@@ -24,7 +24,8 @@ MonoBehaviour:
     Side: 0
     Choices:
     - Text: Sim
-      NextDialogueAsset: {fileID: 11400000}
+      NextDialogueAsset: {fileID: 11400000, guid: 71502d03b4c66dd40b0c8f9adbd8462f,
+        type: 2}
       VariableName: Teste
       VariableValue: Feliz
     - Text: "N\xE3o"
